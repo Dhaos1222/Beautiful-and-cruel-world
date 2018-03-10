@@ -1,0 +1,70 @@
+一、简单数学计算问题（http://acm.nyist.edu.cn/JudgeOnline/problem.php?pid=330）
+描述
+zyc最近迷上了数学，一天，dj想出了一道数学题来难住他。算出1/n，但zyc一时答不上来希望大家能编程帮助他。
+输入
+第一行整数T，表示测试组数。后面T行，每行一个整数 n (1<=|n|<=10^5).
+输出
+输出1/n. (是循环小数的,只输出第一个循环节).
+样例输入
+4
+2
+3
+7
+168
+样例输出
+0.5
+0.3
+0.142857
+0.005952380
+
+代码：
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int main()
+{
+	const int Max = 10111;
+	int num,divisor,flag[Max];;
+
+	cin>>num;
+
+	while(num--)
+	{
+		memset(flag,0,sizeof(flag));
+		cin>>divisor;
+		if(divisor==1||divisor==-1)
+		{
+			cout<<divisor<<endl;
+		}
+		else
+		{
+			if(divisor<0)
+			{
+				cout<<"-";
+				divisor = -divisor;
+			}
+			else if(divisor==0)
+			{
+				cout<<endl;
+				break;
+			}
+			cout<<"0.";
+			int x = 1;
+			while(x)
+			{
+				if(flag[x]==1)
+					break;
+				else
+				{
+					flag[x]=1;
+					x = 10*x;
+					cout<<x/divisor;
+					x = x%divisor;
+				}
+			}
+			cout<<endl;
+		}
+	}
+	return 0;
+}
