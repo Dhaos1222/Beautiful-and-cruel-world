@@ -24,8 +24,8 @@ using namespace std;
 
 int main()
 {
-	const int Max = 10111;
-	int num,divisor,flag[Max];;
+	const int Max = 10111;//若使用flag[10111]，OJ报错,runtimeerror
+	int num,divisor,flag[Max];
 
 	cin>>num;
 
