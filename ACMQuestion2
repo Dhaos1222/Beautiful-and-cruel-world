@@ -1,0 +1,86 @@
+Description
+The SUM problem can be formulated as follows: given four lists A, B, C, D of integer values, compute how many quadruplet (a, b, c, d ) ∈ A x B x C x D are such that a + b + c + d = 0 . In the following, we assume that all lists have the same size n .
+Input
+The first line of the input file contains the size of the lists n (this value can be as large as 4000). We then have n lines containing four integer values (with absolute value as large as 228 ) that belong respectively to A, B, C and D .
+Output
+For each input file, your program has to write the number quadruplets whose sum is zero.
+
+Sample Input
+6
+-45 22 42 -16
+-41 -27 56 30
+-36 53 -37 77
+-36 30 -75 -46
+26 -38 -10 62
+-32 -54 -6 45
+
+Sample Output
+5
+
+
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+//二分查找
+int BinarySearch(int* Sorted,int x,int low,int high)//参数为查找的数组，数组长度，查找值
+{
+	int mid = 0;//查找不到x值就返回0
+	if (low <= high)
+	{
+		mid = (low + high) / 2;
+		if (x > Sorted[mid - 1])
+			mid = BinarySearch(Sorted, x, mid + 1, high);
+		else if (x < Sorted[mid - 1])
+			mid = BinarySearch(Sorted, x, low, mid - 1);
+	}
+	return mid;
+}
+
+int sum1[4000 * 4000], sum2[4000 * 4000];//计算辅助数
+
+int main() {
+	int UnOrdered[4][4000];//声明四列
+	int i,j;//循环辅助数
+	int n;//四元组的数量
+
+	//输入
+	cin >> n;//输入四元组的数量
+	for (j = 0; j < n; j++)
+	{
+		//输入四列数据
+		for (i = 0; i < 4; i++)
+		{
+			cin >> UnOrdered[i][j];
+		}
+
+	}
+
+	//使一二列各取一个数相加，三四列各取一个数相加
+	int count = 0;//计数
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			sum1[count] = UnOrdered[0][i] + UnOrdered[1][j];
+			sum2[count] = UnOrdered[2][i] + UnOrdered[3][j];
+			count++;
+		}
+	}
+	//分别对两个和式排序
+	sort(sum1, sum1 + count);
+	sort(sum2, sum2 + count);
+
+	//利用二分查找寻找有无求和结果为0的搭配
+	int couple = 0;
+	for (i = 0; i < count; i++)
+	{
+		int rest = -sum1[i];
+		if (BinarySearch(sum2,rest,0,count-1))//二分查找使sum1相加为0的值
+			couple += 1;//存在则加一
+	}
+	cout << couple;//输出计算总和为0的数量
+
+	system("pause");
+	return 0;
+}
