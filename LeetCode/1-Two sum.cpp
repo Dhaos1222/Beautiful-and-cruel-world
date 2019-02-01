@@ -26,12 +26,12 @@ vector<int> twoSum(vector<int>nums, int target)
 int main()
 {
 	int target = 9;
-	vector<int>nums = { 2,3,1,5,4 };
+	vector<int>nums = { 2,3,1,5,9 };
 	vector<int> result;
 
 	result = twoSum(nums, target);
-
-	cout << result[0] << " " << result[1] << endl;
+	if(!result.empty())
+	    cout << result[0] << " " << result[1] << endl;
 	
 	system("pause");
 
