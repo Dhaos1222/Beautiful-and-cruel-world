@@ -1,0 +1,37 @@
+//深度遍历至没有mark，此时res+=1
+class Solution {
+public:
+    void DFS(vector<vector<char>>& grid,vector<vector<int>>& mark, int x, int y)
+    {
+        mark[x][y]=1;
+        static const int offx[4]={0,0,-1,1};
+        static const int offy[4]={-1,1,0,0};
+        for(int i = 0;i<4;i++)
+        {
+            int newx = x+offx[i];
+            int newy = y+offy[i];
+            if(newx<0 || newx>=grid.size() || newy<0 || newy>=grid[0].size())
+                continue;
+            if(mark[newx][newy]==0 && grid[newx][newy]=='1')
+                DFS(grid,mark,newx,newy);
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        if(grid.empty())
+            return 0;
+        int islandNum = 0;
+        vector<vector<int>> mark(grid.size(),vector<int>(grid[0].size()));
+        for(int i = 0;i<grid.size();i++)
+        {
+            for(int j = 0;j<grid[0].size();j++)
+            {
+                if(mark[i][j]==0 && grid[i][j]=='1')
+                {
+                    DFS(grid,mark,i,j);
+                    islandNum++;
+                }
+            }
+        }
+        return islandNum;
+    }
+};

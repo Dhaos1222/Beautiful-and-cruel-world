@@ -1,0 +1,13 @@
+//排序后偶数位减去奇数位
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int res = 0;
+        for(int i = 0;i<nums.size();i++)
+        {
+            res = i%2? res-nums[i] : res+nums[i];
+        }
+        return res;
+    }
+};

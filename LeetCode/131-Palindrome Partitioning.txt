@@ -1,0 +1,41 @@
+//µ›πÈ…Ó∂»±È¿˙
+class Solution {
+public:
+    vector<vector<string>> res;
+    vector<string> temp;
+    bool isPartition(string s)
+    {
+        int left = 0;
+        int right = s.length()-1;
+        while(left<right)
+        {
+            if(s[left]!=s[right])
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+    void recursion(string s, int left, int right)
+    {
+        if(left>right)
+        {
+            res.push_back(temp);
+            return;
+        }
+        for(int i = 1;i<=right-left+1;i++)
+        {
+            if(isPartition(s.substr(left,i)))
+            {
+                temp.push_back(s.substr(left,i));
+                recursion(s,left+i,right);
+                temp.pop_back();
+            }
+        }
+            
+    }
+    vector<vector<string>> partition(string s) {
+        recursion(s,0,s.size()-1);
+        return res;
+    }
+};

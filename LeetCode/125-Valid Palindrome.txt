@@ -1,0 +1,29 @@
+//×óÓÒÖ¸ÕëÅÐ¶ÏÏàµÈ
+class Solution {
+public:
+    bool isVal(char& c)
+    {
+        if((c>='0'&&c<='9')||(c>='A'&&c<='Z')||(c>='a'&&c<='z'))
+            return true;
+        else
+            return false;
+    }
+    bool isPalindrome(string s) {
+        int left = 0,right = s.length();
+        while(left<right)
+        {
+            if(!isVal(s[left]))
+                left++;
+            else if(!isVal(s[right]))
+                right--;
+            else if((s[left] + 32 - 'a') %32 != (s[right] + 32 - 'a') % 32)
+                return false;
+            else
+            {
+                left++;
+                right--;
+            }
+        }
+        return true;
+    }
+};

@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    void perm(vector<int> nums,int l,int r)
+    {
+        if(l>r)
+            res.push_back(nums);
+        else
+        {
+            for(int i = l;i<nums.size();i++)
+            {
+                swap(nums[l],nums[i]);
+                perm(nums,l+1,r);
+                swap(nums[l],nums[i]);
+            }   
+        }
+    
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        perm(nums,0,nums.size()-1);
+        return res;
+    }
+};
