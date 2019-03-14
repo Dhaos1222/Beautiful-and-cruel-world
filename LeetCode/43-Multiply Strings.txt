@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int char2int(char c)
+    {
+        return c-'0';
+    }
+    char int2char(int i)
+    {
+        return i+'0';
+    }
+    string multiply(string num1, string num2) {
+        int n1 = num1.length()-1;
+        int n2 = num2.length()-1;
+        if(n1<0||n2<0)return "";
+        vector<int> res(n1+n2+2,0);
+        for(int i = n1;i>=0;--i)
+        {
+            for(int j = n2;j>=0;--j)
+            {
+                int temp = char2int(num1[i])*char2int(num2[j]);
+                temp += res[i+j+1];
+                res[i+j] += temp/10;
+                res[i+j+1] = temp%10;
+            }
+        }
+        int i = 0;
+        while(i<res.size()-1&&res[i]==0)
+        {
+            ++i;
+        }
+        string s;
+        for(i;i<res.size();++i)
+        {
+            s.push_back(int2char(res[i]));
+        }
+        return s;
+    }
+};
