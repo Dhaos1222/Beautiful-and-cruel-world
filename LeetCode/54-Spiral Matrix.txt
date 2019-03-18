@@ -1,0 +1,22 @@
+class Solution {
+public:
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
+    vector<int> result;
+	if (matrix.size() == 0) return result;
+	int u = 0, d = matrix.size()-1, l = 0, r = matrix[0].size()-1;
+	int i, j;//i为横坐标，j为纵坐标
+	while (u <= d && l <= r)
+	{
+		i = u, j = l;
+		while (u <= d && l <= r && j <= r) result.push_back(matrix[i][j++]);
+		u++, i = u, j = r;
+		while (u <= d && l <= r && i <= d)result.push_back(matrix[i++][j]);
+		r--, i = d, j = r;
+		while (u <= d && l <= r && j >= l)result.push_back(matrix[i][j--]);
+		d--, i = d, j = l;
+		while (u <= d && l <= r && i >= u)result.push_back(matrix[i--][j]);
+		l++;
+	}
+	return result;
+}
+};
