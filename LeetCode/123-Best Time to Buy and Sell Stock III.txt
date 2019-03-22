@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int firstbuy = INT_MIN;
+        int firstsell = 0;
+        int secondbuy = INT_MIN;
+        int secondsell = 0;
+        for(int p:prices)
+        {
+            firstbuy = max(firstbuy,-p);
+            firstsell = max(firstsell,p+firstbuy);
+            secondbuy = max(secondbuy,firstsell-p);
+            secondsell = max(secondsell,secondbuy+p);
+        }
+        return secondsell;
+    }
+};
