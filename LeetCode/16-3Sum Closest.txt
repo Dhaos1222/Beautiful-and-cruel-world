@@ -1,0 +1,39 @@
+class Solution {
+public:
+    struct Result
+    {
+        int min;
+        int res;
+    };
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end(),less<int>());
+        int temp;
+        int res = 0;
+        Result result;
+        result.min = INT_MAX;
+        for(int i = 0;i<nums.size()-2;i++)
+        {
+            int left = i+1;
+            int right = nums.size()-1;
+            while(left<right)
+            {
+                res = nums[i]+nums[left]+nums[right];
+                temp = target - res;
+                if(result.min>abs(temp))
+                {
+                    result.min = abs(temp);
+                    result.res = res;
+                }
+                if(temp>0)
+                    left++;
+                else if(temp<0)
+                    right--;
+                else
+                {
+                    return target;
+                }
+            }
+        }
+        return result.res;
+    }
+};
