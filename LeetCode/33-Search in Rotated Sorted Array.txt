@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int res = -1;
+    int search(vector<int>& nums, int target) {
+        Solve(nums,0,nums.size()-1,target);
+        return res;
+    }
+    void Solve(vector<int>&nums,int left,int right,int target)
+    {
+        if(left>right)
+            return;
+        int mid = (left+right)/2;
+        if(nums[mid]==target)
+        {
+            res = mid;
+            return;
+        }
+        if(nums[left]<nums[mid])//×ó±ßÓĞĞò,ÓÒ±ßÎŞĞò
+        {
+            res = BinSearch(nums,left,mid-1,target);
+            if(res!=-1) return;
+            Solve(nums,mid+1,right,target);
+        }
+        else//×ó±ßÎŞĞò£¬ÓÒ±ßÓĞĞò
+        {
+            res = BinSearch(nums,mid+1,right,target);
+            if(res!=-1) return;
+            Solve(nums,left,mid-1,target);
+        }
+    }
+    int BinSearch(vector<int>& nums,int left,int right,int target)
+    {
+        if(left>right)
+            return -1;
+        int mid = (left+right)/2;
+        if(nums[mid]<target)
+            return BinSearch(nums,mid+1,right,target);
+        else if(nums[mid]>target)
+            return BinSearch(nums,left,mid-1,target);
+        else
+            return mid;
+    }
+};
