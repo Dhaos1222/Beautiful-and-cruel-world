@@ -1,0 +1,142 @@
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        _size = capacity;
+    }
+    
+    int get(int key) {
+        list<pair<int,int> >::iterator it;
+        for(it = _list.begin();it !=_list.end();it++)
+        {
+            if((*it).first == key)
+            {
+                int value = (*it).second;
+                _list.push_front(pair<int,int>(key,value));
+                _list.erase(it);
+                return value;
+            }
+        }
+        return -1;
+    }
+    
+    void put(int key, int value) {
+        list<pair<int,int> >::iterator it;
+        for(it = _list.begin();it!=_list.end();it++)//遍历list寻找是否有插入元素
+        {
+            if((*it).first == key)
+            {
+                _list.push_front(pair<int,int>(key,value));//有的话，修改value，放入首部
+                _list.erase(it);//删除搜索到的这个结点
+                return;
+            }
+        }
+        if(it==_list.end())//没有插入元素
+        {
+            if(_list.size()==_size)//容量满
+            {
+                _list.pop_back();
+            }
+            pair<int,int> temp;
+            temp.first = key;
+            temp.second = value;
+            _list.push_front(temp);
+        }
+    }
+private:
+    list<pair<int,int> > _list;
+    int _size;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+
+#include <unordered_map>
+using namespace std;
+struct ListNode1
+{
+    int key;
+    int value;
+    ListNode1* next;
+    ListNode1* pre;
+    ListNode1(int x , int y) : key(x) , value(y),next(nullptr),pre(nullptr)
+    {}
+};
+class LRUCache
+{
+public:
+    LRUCache(int capacity) 
+    {
+        nums = 0;
+        head = nullptr;
+        rear = nullptr;
+        this->capacity = capacity;
+        head = new ListNode1(0,0);
+        rear = new ListNode1(0,0);
+        head->next = rear;
+        rear->pre =  head;
+    }
+    
+    int get(int key) 
+    {
+        if(m_map[key])
+        {
+            ListNode1* node = m_map[key];
+            int val = node->value;
+            delNode(node);
+            insertAfterHead(node);
+            return node->value;
+        }
+        return -1;
+    }
+    
+    void put(int key, int value) 
+    {
+        if(m_map[key])
+        {
+            ListNode1* node = m_map[key];
+            delNode(node);
+            node->value = value;
+            insertAfterHead(node);
+        }
+        else
+        {
+            if(nums == capacity)
+            {
+                ListNode1* n = rear->pre;
+                int k = n->key;
+                delNode(n);
+                m_map.erase(k);
+                --nums;
+                delete n;
+            }
+            ListNode1* new_node = new ListNode1(key,value);
+            insertAfterHead(new_node);
+            m_map[key] = new_node;
+            ++nums;
+        }
+        
+    }
+    void insertAfterHead(ListNode1* node)
+    {
+        ListNode1* tmp = head->next;
+        head->next = node;
+        node->pre = head;
+        node->next = tmp;
+        tmp->pre   = node;
+    }
+    void delNode(ListNode1* node)
+    {
+        node->pre->next = node->next;
+        node->next->pre = node->pre;
+    }
+private:
+    int nums;
+    int capacity;
+    unordered_map<int , ListNode1*> m_map;
+    ListNode1* head;
+    ListNode1* rear;
+};
