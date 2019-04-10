@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> matrix(n,vector<int>(n));
+        int c = 1,j = 0;
+        while(c<=n*n)
+        {
+            for(int i = j;i<n-j;i++)
+                matrix[j][i] = c++;
+            for(int i = j+1;i<n-j;i++)
+                matrix[i][n-j-1] = c++;
+            for(int i = j+1;i<n-j;i++)
+                matrix[n-j-1][n-i-1] = c++;
+            for(int i = j+1;i<n-j-1;i++)
+                matrix[n-i-1][j] = c++;
+            j++;
+        }
+        return matrix;
+    }
+};
