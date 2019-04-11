@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& res,vector<int>& nums,vector<int> temp,int m)
+    {
+        if(m==nums.size())
+        {
+            res.push_back(temp);
+            return;
+        }
+        for(int i = m;i<nums.size();i++)
+        {
+            temp.push_back(nums[i]);
+            dfs(res,nums,temp,i+1);
+            temp.pop_back();
+        }
+        res.push_back(temp);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>res;
+        vector<int>temp;
+        dfs(res,nums,temp,0);
+        return res;
+    }
+};
