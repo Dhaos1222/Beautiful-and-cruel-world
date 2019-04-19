@@ -1,0 +1,19 @@
+class Solution {
+public
+    int coinChange(vectorint& coins, int amount) {
+        vectorint dp(amount+1,-1);
+        dp[0] = 0;
+        for(int i = 1;i=amount;i++)
+        {
+            for(int j = 0;jcoins.size();j++)
+            {
+                if(i-coins[j]=0&&dp[i-coins[j]]!=-1)
+                {
+                    if(dp[i]==-1dp[i]dp[i-coins[j]]+1)
+                        dp[i] = dp[i-coins[j]]+1;
+                }
+            }
+        }
+        return dp[amount];
+    }
+};
